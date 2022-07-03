@@ -1,0 +1,23 @@
+import win;
+import win.ui;
+import fsys;
+import zlib.unzip;
+
+import win.dlg.message;
+winDlgMessage = win.dlg.message(winform);
+
+libtextractorPath = fsys.joinpath(io._exedir, "libtextractor", "libtextractor.dll");
+libtextractorZipPath = fsys.joinpath(io._exedir, "libtextractor.zip");
+extractPath = fsys.joinpath(io._exedir, "libtextractor");
+
+if(not io.exist(libtextractorPath) ) {
+    string.save(libtextractorZipPath, $"\res\libtextractor.zip");
+    var ok,err = zlib.unzip.extract(libtextractorZipPath, extractPath);
+    winDlgMessage.info("libtextractor不存在，正在释放", 800);
+}
+
+
+win.loadForm($"/dlg/winform1.aardio");
+winform1.show();
+
+return win.loopMessage();
